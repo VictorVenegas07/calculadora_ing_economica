@@ -10,17 +10,19 @@ import { GradienteService } from 'src/app/services/gradiente.service';
   styleUrls: ['./gradiente.component.scss']
 })
 export class GradienteComponent {
-  tipoGradiente = ['aritmetico', 'geometrico']
-  claseGradiente = ['creciente', 'decreciente']
+  tipoGradiente = ['Aritmetico', 'Geometrico']
+  claseGradiente = ['Creciente', 'Decreciente']
 
   tipoValor = [
-    {value:'valorPresente', label: 'Presente'},
-    {value:'valorFuturo', label: 'Futuro'},
-    {value:'valorInfinito', label: 'Infinito'}
+    {value:'presente', label: 'Presente'},
+    {value:'futuro', label: 'Futuro'},
+    {value:'infinito', label: 'Infinito'},
+    {value:'primerCuota', label: 'Primera Cuota'}
+
   ]
   tipoCaducidad = [
     {value:'anticipado', label: 'Anticipado'},
-    {value:'vencida', label: 'Vencida'},
+    {value:'vencido', label: 'Vencida'},
   ]
 
   interesTotalCalculado = '';
@@ -40,32 +42,18 @@ export class GradienteComponent {
     this.buildForms();
 
   }
-  // private buildForms() {
-  //   this.formGroup = this.fb.group(
-  //     {
-  //       valorPresente: new FormControl('', Validators.required),
-  //       tasInteres: new FormControl('', [Validators.required]),
-  //       primeraCuota: new FormControl('', Validators.required),
-  //       numeroPago: new FormControl('', [Validators.required]),
-  //       gradiente: new FormControl('', [Validators.required]),
-  //       tipoGradiente: new FormControl('', [Validators.required]),
-  //       claseGradiente: new FormControl('', [Validators.required]),
-
-  //     });
-  // }
   private buildForms() {
     this.formGroup = this.fb.group(
       {
-        valor: new FormControl('', Validators.required),
-        caducidad: new FormControl('', [Validators.required]),
-        primeraCuota: new FormControl('', Validators.required),
-        tasa: new FormControl('', [Validators.required]),
-        numeroPagos: new FormControl('', [Validators.required]),
-        gradiente: new FormControl('', [Validators.required]),
-        tipo_1: new FormControl('', [Validators.required]),
-        tipo_2: new FormControl('', [Validators.required]),
-        total: new FormControl('', [Validators.required]),
-
+        valorPresente: new FormControl(0, Validators.required),
+        tasInteres: new FormControl(0, [Validators.required]),
+        primeraCuota: new FormControl(0, Validators.required),
+        numeroPago: new FormControl(0, [Validators.required]),
+        gradiente: new FormControl(0, [Validators.required]),
+        tipoGradiente: new FormControl('', [Validators.required]),
+        claseGradiente: new FormControl('', [Validators.required]),
+        tipoValor: new FormControl('', Validators.required),
+        tipoCaducidad: new FormControl('', [Validators.required]),
       });
   }
   campoTieneError(campo: string): boolean {
@@ -73,7 +61,26 @@ export class GradienteComponent {
     return control?.invalid && control?.touched || false;
   }
   calcularGradiente (){
-    console.log(GradienteModels.GradienteDesdeObject(this.formGroup.value))
-    this.service.calcularGradiente(this.formGroup.value)
+    // console.log(this.formGroup.value);
+    let gradiente = GradienteModels.GradienteDesdeObject(this.formGroup.value);
+    this.service.CalcularGradientee(gradiente);
+    this.interesTotalCalculado = gradiente.valorPresente.toString();
+  }
+  deshabilitarCampos(){
+    if(this.formGroup.get('tipoValor')?.value === 'infinito'){
+      this.formGroup.get('tipoCaducidad')?.disable();
+      this.formGroup.get('numeroPago')?.disable();
+    }else{
+      this.formGroup.get('tipoCaducidad')?.enable();
+      this.formGroup.get('numeroPago')?.enable();
+    }
+
+  }
+
+  deshabilitarCamposGeometrico(){
+    (this.formGroup.get('tipoGradiente')?.value === 'Geometrico')
+    ?this.formGroup.get('claseGradiente')?.disable()
+    :this.formGroup.get('claseGradiente')?.enable();
+    
   }
 }

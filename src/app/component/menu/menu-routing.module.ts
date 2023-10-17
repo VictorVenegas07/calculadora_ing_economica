@@ -15,6 +15,8 @@ const routes: Routes = [
       { path: 'InteresCompuesto', component:  InteresCompuestoComponent},
       { path: 'Gradiente', component:  GradienteComponent},
       { path: 'tasa interes retorno', component: TasaInteresRetornoComponent },
+      { path: '**', redirectTo: 'Gradiente' },
+      
     ]
   }
 ];

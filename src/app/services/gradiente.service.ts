@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GradienteModels } from '../models/gradiente';
 
 @Injectable({
   providedIn: 'root'
@@ -7,88 +8,127 @@ export class GradienteService {
 
   constructor() { }
 
-  calcularGradiente(datos: any) {
-    console.log(datos);
-    var { primeraCuota, valor,
-      tasa, numeroPagos, gradiente, tipo_1, tipo_2, caducidad } = datos;
-        //Creciente-aritmetico-Valorpresente-vencida
-    if (tipo_2 === "creciente" && tipo_1 === "aritmetico" && valor === "valorPresente" && datos.caducidad === "vencida") {
+  CalcularGradientee(gradiente: GradienteModels) {
+    debugger
+    switch (true) {
+      //Creciente-aritmetico-Valorpresente-vencida
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Creciente"
+        && gradiente.tipoValor === "presente" && gradiente.tipoCaducidad === "vencido":
+        gradiente.calcularAritmeticoCrecientePresenteVencido();
+        break;
 
-      datos.total = primeraCuota * ((Math.pow((1 + tasa), numeroPagos) - 1)
-        / (tasa * Math.pow((1 + tasa), numeroPagos))) + (gradiente / tasa) *
-        (((Math.pow((1 + tasa), numeroPagos) - 1) / (tasa * Math.pow((1 + tasa), numeroPagos)))
-          - (numeroPagos / Math.pow((1 + tasa), numeroPagos)));
+      //Decreciente-aritmetico-Valorpresente-vencida
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Decreciente"
+        && gradiente.tipoValor === "presente" && gradiente.tipoCaducidad === "vencido":
+        gradiente.calcularAritmeticoDecrecientePresenteVencido();
+        break;
+
+      //Creciente-aritmetico-Valorpresente-Anticipado
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Creciente"
+        && gradiente.tipoValor === "presente" && gradiente.tipoCaducidad === "anticipado":
+        gradiente.calcularAritmeticoCrecientePresenteAnticipado();
+        break;
+
+      //Decreciente-aritmetico-Valorpresente-Anticipado
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Decreciente"
+        && gradiente.tipoValor === "presente" && gradiente.tipoCaducidad === "anticipado":
+        gradiente.calcularAritmeticoDecrecientePresenteAnticipado();
+        break;
+
+      //Creciente-aritmetico-ValorFuturo-vencida
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Creciente"
+        && gradiente.tipoValor === "futuro" && gradiente.tipoCaducidad === "vencido":
+        gradiente.calcularAritmeticoCrecienteFuturoVencido();
+        break;
+
+      //Decreciente-aritmetico-ValorFuturo-vencida
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Decreciente"
+        && gradiente.tipoValor === "futuro" && gradiente.tipoCaducidad === "vencido":
+        gradiente.calcularAritmeticoDecrecienteFuturoVencido();
+        break;
+
+      //Creciente-aritmetico-ValorFuturo-Anticipado
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Creciente"
+        && gradiente.tipoValor === "futuro" && gradiente.tipoCaducidad === "anticipado":
+        gradiente.calcularAritmeticoCrecienteFuturoAnticipado();
+        break;
+
+
+      //Creciente-aritmetico-ValorInfinito
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Creciente"
+        && gradiente.tipoValor === "infinito":
+        gradiente.calcularAritmeticoCrecienteInfinito();
+        break;
+
+      //Decreciente-aritmetico-ValorInfinito
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Decreciente"
+        && gradiente.tipoValor === "infinito":
+        gradiente.calcularAritmeticoDecrecienteInfinito();
+        break;
+
+
+      //PrimerCuota-aritmetico-creciente-vencida
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Creciente"
+        && gradiente.tipoValor === "primerCuota" && gradiente.tipoCaducidad === "vencido":
+        gradiente.CalcularAritmeticoPrimerCuotaCrecienteVencido();
+        break;
+
+      //PrimerCuota-aritmetico-decreciente-vencida
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Decreciente"
+        && gradiente.tipoValor === "primerCuota" && gradiente.tipoCaducidad === "vencido":
+        gradiente.CalcularAritmeticoPrimerCuotaDecrecienteVencido();
+        break;
+
+      //PrimerCuota-aritmetico-creciente-anticipado
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Creciente"
+        && gradiente.tipoValor === "primerCuota" && gradiente.tipoCaducidad === "anticipado":
+        gradiente.CalcularAritmeticoPrimerCuotaCrecienteAnticipado();
+        break;
+
+      //PrimerCuota-aritmetico-decreciente-anticipado
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Decreciente"
+        && gradiente.tipoValor === "primerCuota" && gradiente.tipoCaducidad === "anticipado":
+        gradiente.CalcularAritmeticoPrimerCuotaDecrecienteAnticipado();
+        break;
+
+      //-----------------------------GEOMETRICO------------------------------------\\
+      //valorPresente-vencida-geometrico
+      case gradiente.tipoGradiente === "Geometrico" && gradiente.tipoValor === "presente" && gradiente.tipoCaducidad === "vencido":
+        gradiente.calcularGeometricoVencido();
+        break;
+      //valorPresente-anticipado-geometrico
+      case gradiente.tipoGradiente === "Geometrico" && gradiente.tipoValor === "presente" && gradiente.tipoCaducidad === "anticipado":
+        gradiente.calcularGeometricoAnticipado();
+        break;
+
+      //ValorFuturo-Vencida-Geometrico
+      case gradiente.tipoGradiente === "Geometrico" && gradiente.tipoValor === "futuro" && gradiente.tipoCaducidad === "vencido":
+        gradiente.CalcularGrometricoValorFuturoVencido();
+        break;
+
+      //ValorFuturo-Anticipado-Geometrico
+      case gradiente.tipoGradiente === "Geometrico" && gradiente.tipoValor === "futuro" && gradiente.tipoCaducidad === "anticipado":
+        gradiente.CalcularGrometricoValorFuturoAnticipado();
+        break;
+
+      //ValorInfinito-Geometrico
+      case gradiente.tipoGradiente === "Geometrico" && gradiente.tipoValor === "infinito":
+        gradiente.CalcularGrometricoValorInfinito();
+        break;
+
+      //PrimeraCuota-vencido-Geometrico
+      case gradiente.tipoGradiente === "Geometrico" && gradiente.tipoValor === "primerCuota" && gradiente.tipoCaducidad === "vencido":
+        gradiente.CalcularGrometricoPrimeraCuotaVencido();
+        break;
+      //PrimeraCuota-Anticipado-Geometrico
+      case gradiente.tipoGradiente === "Geometrico" && gradiente.tipoValor === "primerCuota" && gradiente.tipoCaducidad === "anticipado":
+        gradiente.CalcularGrometricoPrimeraCuotaAnticipado();
+        break;
+      default:
+        break;
 
     }
-    //2-vencida
-    if (tipo_2 === "decreciente" && tipo_1 === "aritmetico" && valor === "valorPresente" && datos.caducidad === "vencida") {
+    console.log(gradiente.valorPresente);
 
-      datos.total = primeraCuota * ((Math.pow((1 + tasa), numeroPagos) - 1)
-        / (tasa * Math.pow((1 + tasa), numeroPagos))) - (gradiente / tasa) *
-        (((Math.pow((1 + tasa), numeroPagos) - 1) / (tasa * Math.pow((1 + tasa), numeroPagos)))
-          - (numeroPagos / Math.pow((1 + tasa), numeroPagos)));
-    }
-
-    //1-anticipado
-    if (tipo_2 === "creciente" && tipo_1 === "aritmetico" && valor === "valorPresente" && datos.caducidad === "anticipado") {
-
-      datos.total = primeraCuota * ((Math.pow((1 + tasa), numeroPagos) - 1)
-        / (tasa * Math.pow((1 + tasa), (numeroPagos -1)))) + (gradiente / tasa) *
-        (((Math.pow((1 + tasa), numeroPagos) - 1) / (tasa * Math.pow((1 + tasa), (numeroPagos-1))))
-          - (numeroPagos / Math.pow((1 + tasa), (numeroPagos-1))));
-
-    }
-    //2-anticipado
-    if (tipo_2 === "decreciente" && tipo_1 === "aritmetico" && valor === "valorPresente" && datos.caducidad === "anticipado") {
-
-      datos.total = primeraCuota * ((Math.pow((1 + tasa), numeroPagos) - 1)
-        / (tasa * Math.pow((1 + tasa), (numeroPagos-1)))) - (gradiente / tasa) *
-        (((Math.pow((1 + tasa), numeroPagos) - 1) / (tasa * Math.pow((1 + tasa), (numeroPagos-1))))
-          - (numeroPagos / Math.pow((1 + tasa), (numeroPagos-1))));
-    }
-
-    //3
-    if (tipo_2 === "creciente" && tipo_1 === "aritmetico" && valor === "valorFuturo"
-      && caducidad === "anticipado") {
-
-      datos.total = (primeraCuota * ((Math.pow((1 + tasa), numeroPagos) - 1)
-        / tasa) + (gradiente / tasa) * (((Math.pow((1 + tasa), numeroPagos) - 1) / tasa)
-          - numeroPagos)) * (1 + tasa);
-
-    }
-    //4
-    if (tipo_2 === "decreciente" && tipo_1 === "aritmetico" && valor === "valorFuturo"
-      && caducidad === "anticipado") {
-
-      datos.total = (primeraCuota * ((Math.pow((1 + tasa), numeroPagos) - 1)
-        / tasa) - (gradiente / tasa) * (((Math.pow((1 + tasa), numeroPagos) - 1) / tasa)
-          - numeroPagos)) * (1 + tasa);
-    }
-    ///5
-    if (tipo_2 === "creciente" && tipo_1 === "aritmetico" && valor === "valorFuturo"
-      && caducidad === "vencida") {
-
-      datos.total = primeraCuota * ((Math.pow((1 + tasa), numeroPagos) - 1)
-        / tasa) + (gradiente / tasa) * (((Math.pow((1 + tasa), numeroPagos) - 1) / tasa)
-          - numeroPagos);
-    }
-    //6
-    if (tipo_2 === "decreciente" && tipo_1 === "aritmetico" && valor === "valorFuturo"
-      && caducidad === "vencida") {
-
-      datos.total = primeraCuota * ((Math.pow((1 + tasa), numeroPagos) - 1)
-        / tasa) - (gradiente / tasa) * (((Math.pow((1 + tasa), numeroPagos) - 1) / tasa)
-          - numeroPagos);
-    }
-
-    if (tipo_2 === "creciente" && tipo_1 === "aritmetico" && valor === "valorInfinito"){
-        datos.total = (primeraCuota / tasa ) + (gradiente/Math.pow(tasa, 2))
-    }
-
-    if (tipo_2 === "decreciente" && tipo_1 === "aritmetico" && valor === "valorInfinito"){
-      datos.total = (primeraCuota / tasa ) - (gradiente/Math.pow(tasa, 2))
-    }
-    console.log(datos.total)
-    return datos;
   }
 }

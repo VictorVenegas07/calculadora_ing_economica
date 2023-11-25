@@ -44,15 +44,22 @@ export class GradienteService {
       //Decreciente-aritmetico-ValorFuturo-vencida
       case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Decreciente"
         && gradiente.tipoValor === "futuro" && gradiente.tipoCaducidad === "vencido":
+        console.log('HOLA')
         gradiente.calcularAritmeticoDecrecienteFuturoVencido();
         break;
 
       //Creciente-aritmetico-ValorFuturo-Anticipado
       case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Creciente"
         && gradiente.tipoValor === "futuro" && gradiente.tipoCaducidad === "anticipado":
+        console.log('HOLA 2')
         gradiente.calcularAritmeticoCrecienteFuturoAnticipado();
         break;
-
+      //Decreciente-aritmetico-ValorFuturo-Anticipado
+      case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Decreciente"
+        && gradiente.tipoValor === "futuro" && gradiente.tipoCaducidad === "anticipado":
+        console.log('HOLA 3')
+        gradiente.calcularAritmeticoDecrecienteFuturoAniticipado();
+        break;
 
       //Creciente-aritmetico-ValorInfinito
       case gradiente.tipoGradiente === "Aritmetico" && gradiente.claseGradiente === "Creciente"

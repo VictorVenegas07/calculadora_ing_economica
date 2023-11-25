@@ -40,7 +40,6 @@ export class InteresSimpleServiceService {
     switch (campoVacio) {
       case 'interes':
         let sum = this.getPeriodoSum(interes.periodos);
-        debugger
         const i = interes.capital * (interes.tasaInteres / 100) * (sum);
         message = `interes $${i}`
         break;
@@ -50,10 +49,9 @@ export class InteresSimpleServiceService {
         message = `capital $${c.toFixed(3)}`
         break;
       case 'tasaInteres':
-        debugger
         let sum_ = this.getPeriodoSum(interes.periodos);
         const TI = (interes.interes) / ((interes.capital) * sum_);
-        message = `tasaInteres ${TI*12}%`
+        message = `tasaInteres ${TI*100}%`
         break;
       case 'periodos':
         const p = (interes.interes) / ((interes.capital) * (interes.tasaInteres / 100));

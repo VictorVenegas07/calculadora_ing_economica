@@ -49,7 +49,10 @@ export class TasaInteresRetornoComponent {
   calcularGradiente (){
     let TIR = TasaRetornoModel.DesdeObjeto(this.formGroup.value);
     this.service.CalcularTIR(TIR);
-    this.interesTotalCalculado = TIR.TRI.toString();
+    debugger
+    this.interesTotalCalculado  = `${( TIR.TRI*100).toString()}% -------- 
+    ${TIR.TRI.toString()}
+    `;    
   }
   deshabilitarCampos(){
     (this.formGroup.get('valorPeriodo')?.value == 1)
